@@ -1,0 +1,25 @@
+COMPILAÇÃO E VALIDAÇÃO — TIMER
+
+Build integral: SUCESSO
+Comando: bash gradlew :app:testDebugUnitTest :app:assembleRelease --no-daemon
+Ferramentas: JDK 21, Android SDK 37.0, Build Tools 37.0.0, Gradle 9.5.0
+Testes: 9 passaram; 0 falhas; 0 erros.
+  BackgroundTaskTimerTest: 8 testes
+  ExampleUnitTest: 1 teste
+
+APK: OnStop2FinishAndRemoveTask-Timer-1-a-5-min.apk
+Pacote: io.github.takusan23.onstop2finishandremovetask.timer
+Versão: 2.0.6-timer (8)
+Nome: OnStop2FinishAndRemoveTask Timer
+Assinatura: chave local exclusiva; verificada com apksigner (v3).
+Alinhamento ZIP e de bibliotecas nativas (16 KB): verificado.
+Integridade ZIP: verificada.
+Permissões: equivalentes ao APK original, normalizando a mudança de identificador.
+SHA-256 do APK:
+c8eb842ec7fe9ef427492c30b4dbc4450a61b272c8911ddf930aa4e98aac9c95
+
+Não foi instalado nem testado em celular/emulador Android.
+O serviço exige Shizuku ativo e permissão concedida.
+Pare o serviço da versão original antes de usar a versão Timer.
+O temporizador remove tarefas; não força a parada de todos os processos do app.
+Contagens podem atrasar com suspensão/Doze e são canceladas ao encerrar o serviço.

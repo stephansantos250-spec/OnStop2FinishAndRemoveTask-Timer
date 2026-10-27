@@ -26,4 +26,7 @@
     <string name="screen_shizuku_prepare_button">Shizuku について</string>
     <string name="screen_app_list_permission_card_button">付与する</string>
     <string name="screen_app_list_permission_card_title">通知権限を付与すると通知領域からサービスを終了できます。（任意です）</string>
+    <string name="screen_setting_close_delay_title">バックグラウンド終了タイマー</string>
+    <string name="screen_setting_close_delay_value">待機時間：%1$d 分</string>
+    <string name="screen_setting_close_delay_description">選択したアプリをバックグラウンドに移ってから1〜5分後に終了します。再度開くとタイマーを解除します。時間を変更すると待機中のタイマーが再開始します。</string>
 </resources>

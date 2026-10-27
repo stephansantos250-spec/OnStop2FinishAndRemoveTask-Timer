@@ -1,0 +1,9 @@
+<resources>
+    <string name="screen_setting_close_delay_title">Temporizador de fechamento</string>
+    <string name="screen_setting_close_delay_value">Tempo: %1$d min</string>
+    <string name="screen_setting_close_delay_description">Fecha os apps selecionados após 1 a 5 minutos em segundo plano. Reabrir um app cancela seu temporizador. Alterar o tempo reinicia os temporizadores pendentes.</string>
+    <string name="screen_setting_title">Configurações</string>
+    <string name="screen_setting_stop_service">Parar serviço</string>
+    <string name="screen_setting_license_title">Licença</string>
+    <string name="screen_setting_github_title">Abrir GitHub</string>
+</resources>

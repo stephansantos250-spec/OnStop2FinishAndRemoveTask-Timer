@@ -25,4 +25,7 @@
     <string name="screen_shizuku_prepare_button">About Shizuku</string>
     <string name="screen_app_list_permission_card_button">Grant</string>
     <string name="screen_app_list_permission_card_title">If granted notification permission, stoppable service from notification area. (optional)</string>
+    <string name="screen_setting_close_delay_title">Background close timer</string>
+    <string name="screen_setting_close_delay_value">Delay: %1$d min</string>
+    <string name="screen_setting_close_delay_description">Close selected apps after 1–5 minutes in the background. Reopening an app cancels its timer. Changing the delay restarts pending timers.</string>
 </resources>

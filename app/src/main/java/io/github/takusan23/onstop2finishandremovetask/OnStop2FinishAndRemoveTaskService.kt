@@ -11,47 +11,68 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.IBinder
+import android.os.RemoteException
+import android.util.Log
 import android.widget.Toast
 import android.window.TaskSnapshot
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import io.github.takusan23.onstop2finishandremovetask.tool.BackgroundTaskTimer
+import io.github.takusan23.onstop2finishandremovetask.tool.CloseDelaySettings
 import io.github.takusan23.onstop2finishandremovetask.tool.RegisterAppListTool
 import io.github.takusan23.onstop2finishandremovetask.tool.ShizukuServiceTool
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.isActive
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 /** 今表示されている Activity が離れた（ほかアプリに切り替えた）時に Activity を終了する */
 class OnStop2FinishAndRemoveTaskService : Service() {
 
+    private val stopAction get() = "$packageName.action_service_stop"
+
     private val scope = MainScope()
+    private val taskTimer = BackgroundTaskTimer(scope) { task ->
+        try {
+            if (ShizukuServiceTool.activity.removeTask(task.id)) {
+                Toast.makeText(this, getString(
+                    R.string.service_onstop_2_finish_and_remove_task_task_removed_toast_message_format,
+                    task.label
+                ), Toast.LENGTH_SHORT).show()
+            }
+        } catch (error: RemoteException) {
+            Log.e("BackgroundTaskTimer", "Shizuku connection lost", error)
+            stopSelf()
+        } catch (error: SecurityException) {
+            Log.e("BackgroundTaskTimer", "Shizuku permission revoked", error)
+            stopSelf()
+        }
+    }
+
+    private sealed interface TaskEvent {
+        data class Foreground(val task: BackgroundTaskTimer.Task) : TaskEvent
+        data class Removed(val taskId: Int) : TaskEvent
+    }
 
     private val notificationManager by lazy { NotificationManagerCompat.from(this) }
 
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent?.action == ACTION_SERVICE_STOP) {
+            if (intent?.action == stopAction) {
                 stopSelf()
             }
         }
     }
 
-    /**
-     * 最前面に表示された Activity を取得する
-     * StateFlow にしていつ first しても同じ値が来るように（起動し直さない）
-     */
-    val taskStackHotFlow = callbackFlow {
+    /** Buffered events avoid dropping quick switches between registered apps. */
+    private val taskEvents = callbackFlow<TaskEvent> {
         val listener = object : ITaskStackListener.Stub() {
             override fun onTaskStackChanged() {
                 // do nothing
@@ -90,11 +111,16 @@ class OnStop2FinishAndRemoveTaskService : Service() {
             }
 
             override fun onTaskRemoved(taskId: Int) {
-                // do nothing
+                trySend(TaskEvent.Removed(taskId))
             }
 
             override fun onTaskMovedToFront(taskInfo: ActivityManager.RunningTaskInfo?) {
-                trySend(taskInfo)
+                val packageName = taskInfo?.topActivity?.packageName ?: return
+                trySend(TaskEvent.Foreground(BackgroundTaskTimer.Task(
+                    id = taskInfo.taskId,
+                    packageName = packageName,
+                    label = taskInfo.topActivityInfo?.loadLabel(packageManager)?.toString() ?: packageName
+                )))
             }
 
             override fun onTaskDescriptionChanged(taskInfo: ActivityManager.RunningTaskInfo?) {
@@ -192,15 +218,7 @@ class OnStop2FinishAndRemoveTaskService : Service() {
 
         ShizukuServiceTool.activity.registerTaskStackListener(listener)
         awaitClose { ShizukuServiceTool.activity.unregisterTaskStackListener(listener) }
-    }.distinctUntilChanged { a, b ->
-        a?.topActivity?.packageName == b?.topActivity?.packageName
-    }.onEach {
-        // println("onEach ${it?.topActivity?.packageName}")
-    }.stateIn(
-        scope = scope,
-        started = SharingStarted.Eagerly,
-        initialValue = null
-    )
+    }.buffer(Channel.UNLIMITED)
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -210,34 +228,31 @@ class OnStop2FinishAndRemoveTaskService : Service() {
         // サービスを止められるように BroadcastReceiver
         // 通知のボタンから発行されるので exported ?
         val intentFilter = IntentFilter().apply {
-            addAction(ACTION_SERVICE_STOP)
+            addAction(stopAction)
         }
         ContextCompat.registerReceiver(this, broadcastReceiver, intentFilter, ContextCompat.RECEIVER_EXPORTED)
 
         scope.launch {
-            RegisterAppListTool.realtimeReadApplicationIdList(this@OnStop2FinishAndRemoveTaskService).collectLatest { idList ->
-
-                while (isActive) {
-
-                    // 削除対象が来るまで待つ
-                    val removeTask = taskStackHotFlow.first { info -> info?.topActivity?.packageName in idList }
-                    // 別のアプリが開かれるのを待つ
-                    taskStackHotFlow.first { info -> info?.topActivity?.packageName !in idList }
-
-                    if (removeTask != null) {
-
-                        // 削除する
-                        ShizukuServiceTool.activity.removeTask(removeTask.taskId)
-
-                        // 謎だが POST_NOTIFICATION 権限がないと Toast をバックグラウンドから出すことが出来ない
-                        val message = getString(
-                            // 変更
-                            R.string.service_onstop_2_finish_and_remove_task_task_removed_toast_message_format,
-                            removeTask.topActivityInfo?.loadLabel(packageManager)
-                        )
-                        Toast.makeText(this@OnStop2FinishAndRemoveTaskService, message, Toast.LENGTH_SHORT).show()
+            combine(
+                RegisterAppListTool.realtimeReadApplicationIdList(this@OnStop2FinishAndRemoveTaskService),
+                CloseDelaySettings.observe(this@OnStop2FinishAndRemoveTaskService)
+            ) { packages, minutes -> packages.toSet() to minutes }
+                .collect { (packages, minutes) -> taskTimer.configure(packages, minutes) }
+        }
+        scope.launch {
+            try {
+                taskEvents.collect { event ->
+                    when (event) {
+                        is TaskEvent.Foreground -> taskTimer.onForeground(event.task)
+                        is TaskEvent.Removed -> taskTimer.onTaskRemoved(event.taskId)
                     }
                 }
+            } catch (error: RemoteException) {
+                Log.e("BackgroundTaskTimer", "Cannot observe tasks", error)
+                stopSelf()
+            } catch (error: SecurityException) {
+                Log.e("BackgroundTaskTimer", "Cannot observe tasks", error)
+                stopSelf()
             }
         }
     }
@@ -249,6 +264,7 @@ class OnStop2FinishAndRemoveTaskService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+        taskTimer.cancelAll()
         scope.cancel()
         unregisterReceiver(broadcastReceiver)
     }
@@ -265,7 +281,7 @@ class OnStop2FinishAndRemoveTaskService : Service() {
             setContentText(getString(R.string.service_onstop_2_finish_and_remove_task_running_notification_text))
             setSmallIcon(R.drawable.onstop2finishandremovetask)
             // 終了ボタンを追加
-            val stopPendingIntent = PendingIntent.getBroadcast(this@OnStop2FinishAndRemoveTaskService, 1, Intent(ACTION_SERVICE_STOP), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            val stopPendingIntent = PendingIntent.getBroadcast(this@OnStop2FinishAndRemoveTaskService, 1, Intent(stopAction), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
             addAction(NotificationCompat.Action(R.drawable.onstop2finishandremovetask, getString(R.string.service_onstop_2_finish_and_remove_task_running_notification_action_stop), stopPendingIntent))
         }.build()
         startForeground(1, notification)
@@ -273,7 +289,6 @@ class OnStop2FinishAndRemoveTaskService : Service() {
 
     companion object {
         private const val CHANNEL_ID = "running_notification_channel_id"
-        private const val ACTION_SERVICE_STOP = "io.github.takusan23.onstop2finishandremovetask.action_service_stop"
 
         fun stop(context: Context) {
             context.stopService(Intent(context, OnStop2FinishAndRemoveTaskService::class.java))

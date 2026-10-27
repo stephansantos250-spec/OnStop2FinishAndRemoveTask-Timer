@@ -9,6 +9,8 @@ android {
         version = release(37)
     }
 
+    buildToolsVersion = "37.0.0"
+
     defaultConfig {
         applicationId = "io.github.takusan23.onstop2finishandremovetask"
         minSdk = 31
@@ -21,6 +23,8 @@ android {
 
     buildTypes {
         release {
+            applicationIdSuffix = ".timer"
+            versionNameSuffix = "-timer"
             optimization {
                 enable = true
             }
@@ -67,6 +71,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     testImplementation(libs.junit)
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

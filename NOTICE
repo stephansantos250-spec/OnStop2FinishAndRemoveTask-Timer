@@ -1,0 +1,10 @@
+OnStop2FinishAndRemoveTask Timer
+
+Derived from OnStop2FinishAndRemoveTask by takusan23.
+Original project: https://github.com/takusan23/OnStop2FinishAndRemoveTask
+Original license: Apache License 2.0 (see LICENSE).
+
+Modifications in this repository add a configurable background task timer,
+Portuguese settings, and system/user-installed app category filters.
+Modified versions use a separate application ID and a separate signing key.
+This is an unofficial derivative; no endorsement by the original author is implied.
