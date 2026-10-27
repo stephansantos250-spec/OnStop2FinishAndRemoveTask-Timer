@@ -9,7 +9,7 @@ Versão modificada e **não oficial** do [OnStop2FinishAndRemoveTask](https://gi
 | **Timer 2** — `2.0.6-timer.2` | Timer de 1–5 min; filtros **Todos / Instalados / Sistema**; identificação do tipo de app | [Release Timer 2](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer.2) |
 | **Timer 1** — `2.0.6-timer` | Timer de 1–5 min; cancelamento ao reabrir; configuração salva | [Release Timer 1](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer) |
 
-Cada release inclui o **APK assinado**, o **ZIP do código-fonte correspondente** e as **somas SHA-256**. O ramo `main` contém a versão Timer 1. As tags preservam o código de cada versão.
+Cada release inclui o **APK assinado**, o **ZIP do código-fonte correspondente** e as **somas SHA-256**. O ramo `main` contém a versão Timer 2. As tags preservam o código de cada versão.
 
 ## Instalação
 

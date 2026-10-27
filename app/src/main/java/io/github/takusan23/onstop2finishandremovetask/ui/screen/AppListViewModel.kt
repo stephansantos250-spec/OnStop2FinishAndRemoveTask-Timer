@@ -4,13 +4,13 @@ import android.app.Application
 import android.content.pm.ApplicationInfo
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import io.github.takusan23.onstop2finishandremovetask.tool.AppTypeFilter
 import io.github.takusan23.onstop2finishandremovetask.tool.RegisterAppListTool
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class AppListViewModel(private val application: Application) : AndroidViewModel(application) {
@@ -30,7 +30,7 @@ class AppListViewModel(private val application: Application) : AndroidViewModel(
             .mapNotNull { info ->
                 AppInfo(
                     isRegistered = info.packageName in registerAppList,
-                    isSystemApp = info.applicationInfo?.let { (it.flags and ApplicationInfo.FLAG_SYSTEM) != 0 } == true,
+                    isSystemApp = info.applicationInfo?.let { (it.flags and (ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0 } == true,
                     appName = info.applicationInfo?.loadLabel(context.packageManager).toString(),
                     packageName = info.packageName,
                     versionName = info.versionName
@@ -39,9 +39,9 @@ class AppListViewModel(private val application: Application) : AndroidViewModel(
             .filter {
                 val hasAppName = it.appName.contains(searchOption.searchAppName, ignoreCase = true)
                 val hasPackageName = it.packageName.contains(searchOption.searchPackageName, ignoreCase = true)
-                val hasSystemAppOrTrue = if (!searchOption.isIncludeSystemApp) !it.isSystemApp else true
+                val hasAppType = searchOption.appType.matches(it.isSystemApp)
                 val hasOnlyRegisterAppOrTrue = if (searchOption.isOnlyRegisterApp) it.isRegistered else true
-                hasAppName && hasPackageName && hasSystemAppOrTrue && hasOnlyRegisterAppOrTrue
+                hasAppName && hasPackageName && hasAppType && hasOnlyRegisterAppOrTrue
             }
             .sortedBy { it.packageName }
     }
@@ -89,7 +89,7 @@ class AppListViewModel(private val application: Application) : AndroidViewModel(
     data class SearchOption(
         val searchAppName: String = "",
         val searchPackageName: String = "",
-        val isIncludeSystemApp: Boolean = true,
+        val appType: AppTypeFilter = AppTypeFilter.ALL,
         val isOnlyRegisterApp: Boolean = false
     ) {
         companion object {

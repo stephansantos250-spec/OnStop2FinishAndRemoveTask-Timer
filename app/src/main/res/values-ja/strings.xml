@@ -29,4 +29,11 @@
     <string name="screen_setting_close_delay_title">バックグラウンド終了タイマー</string>
     <string name="screen_setting_close_delay_value">待機時間：%1$d 分</string>
     <string name="screen_setting_close_delay_description">選択したアプリをバックグラウンドに移ってから1〜5分後に終了します。再度開くとタイマーを解除します。時間を変更すると待機中のタイマーが再開始します。</string>
+    <string name="screen_app_list_type_title">表示するアプリ</string>
+    <string name="screen_app_list_filter_all">すべて</string>
+    <string name="screen_app_list_filter_installed">インストール済み</string>
+    <string name="screen_app_list_filter_system">システム</string>
+    <string name="screen_app_list_type_system">システムアプリ</string>
+    <string name="screen_app_list_type_installed">ユーザーアプリ</string>
+    <string name="screen_app_list_system_warning">重要なシステムアプリの選択は避けてください。終了すると端末の動作に影響する場合があります。</string>
 </resources>

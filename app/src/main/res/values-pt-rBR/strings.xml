@@ -6,4 +6,21 @@
     <string name="screen_setting_stop_service">Parar serviço</string>
     <string name="screen_setting_license_title">Licença</string>
     <string name="screen_setting_github_title">Abrir GitHub</string>
+    <string name="screen_app_list_top_app_bar_title">Selecionar apps</string>
+    <string name="screen_app_list_type_title">Mostrar aplicativos</string>
+    <string name="screen_app_list_filter_all">Todos</string>
+    <string name="screen_app_list_filter_installed">Instalados</string>
+    <string name="screen_app_list_filter_system">Sistema</string>
+    <string name="screen_app_list_type_system">App do sistema</string>
+    <string name="screen_app_list_type_installed">App instalado pelo usuário</string>
+    <string name="screen_app_list_system_warning">Evite selecionar componentes essenciais do sistema: fechar suas tarefas pode afetar o funcionamento do celular.</string>
+    <string name="screen_app_list_search_bottomsheet_title">Pesquisar</string>
+    <string name="screen_app_list_search_bottomsheet_search_app_name">Nome do app</string>
+    <string name="screen_app_list_search_bottomsheet_search_package_name">Nome do pacote</string>
+    <string name="screen_app_list_search_bottomsheet_only_register_app">Somente apps selecionados</string>
+    <string name="service_onstop_2_finish_and_remove_task_notification_channel_name">Serviço em execução</string>
+    <string name="service_onstop_2_finish_and_remove_task_running_notification_title">Temporizador de apps ativo</string>
+    <string name="service_onstop_2_finish_and_remove_task_running_notification_text">Monitorando os apps selecionados</string>
+    <string name="service_onstop_2_finish_and_remove_task_running_notification_action_stop">Parar serviço</string>
+    <string name="service_onstop_2_finish_and_remove_task_task_removed_toast_message_format">Tarefa de [%s] removida</string>
 </resources>

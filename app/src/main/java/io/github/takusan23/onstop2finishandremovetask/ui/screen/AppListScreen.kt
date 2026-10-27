@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -46,6 +48,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import io.github.takusan23.onstop2finishandremovetask.OnStop2FinishAndRemoveTaskService
 import io.github.takusan23.onstop2finishandremovetask.R
+import io.github.takusan23.onstop2finishandremovetask.tool.AppTypeFilter
 
 @Composable
 fun AppListScreen(
@@ -67,13 +70,21 @@ fun AppListScreen(
     Scaffold(
         topBar = {
             TopAppBarWithSearchIcon(
-                currentSearch = searchOption != AppListViewModel.SearchOption.EMPTY,
+                currentSearch = searchOption.value != AppListViewModel.SearchOption.EMPTY,
                 onSearchClick = { showSearchBottomSheet.value = true },
                 onSettingClick = { onNavigate(RoutePaths.Setting) }
             )
         }
     ) { paddingValues ->
         LazyColumn(contentPadding = paddingValues) {
+            item {
+                AppTypeSelector(
+                    selected = searchOption.value.appType,
+                    onSelected = { type ->
+                        viewModel.updateSearchOption(searchOption.value.copy(appType = type))
+                    }
+                )
+            }
             item {
                 // 通知権限があればサービスを停めることが出来ます通知
                 NotificationPermissionCard()
@@ -89,6 +100,40 @@ fun AppListScreen(
     }
 }
 
+@Composable
+private fun AppTypeSelector(
+    selected: AppTypeFilter,
+    onSelected: (AppTypeFilter) -> Unit
+) {
+    Column(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp)) {
+        Text(
+            text = stringResource(R.string.screen_app_list_type_title),
+            style = MaterialTheme.typography.titleSmall
+        )
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            AppTypeFilter.entries.forEach { type ->
+                val label = when (type) {
+                    AppTypeFilter.ALL -> R.string.screen_app_list_filter_all
+                    AppTypeFilter.INSTALLED -> R.string.screen_app_list_filter_installed
+                    AppTypeFilter.SYSTEM -> R.string.screen_app_list_filter_system
+                }
+                FilterChip(
+                    selected = selected == type,
+                    onClick = { onSelected(type) },
+                    label = { Text(stringResource(label)) }
+                )
+            }
+        }
+        if (selected != AppTypeFilter.INSTALLED) {
+            Text(
+                text = stringResource(R.string.screen_app_list_system_warning),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SearchBottomSheet(
@@ -100,14 +145,12 @@ private fun SearchBottomSheet(
     fun update(
         searchAppName: String = searchOption.searchAppName,
         searchPackageName: String = searchOption.searchPackageName,
-        isIncludeSystemApp: Boolean = searchOption.isIncludeSystemApp,
         isOnlyRegisterApp: Boolean = searchOption.isOnlyRegisterApp
     ) {
         onUpdate(
             searchOption.copy(
                 searchAppName = searchAppName,
                 searchPackageName = searchPackageName,
-                isIncludeSystemApp = isIncludeSystemApp,
                 isOnlyRegisterApp = isOnlyRegisterApp
             )
         )
@@ -159,11 +202,6 @@ private fun SearchBottomSheet(
                 value = searchOption.searchPackageName,
                 onValueChange = { update(searchPackageName = it) },
                 label = { Text(stringResource(R.string.screen_app_list_search_bottomsheet_search_package_name)) }
-            )
-            SwitchWithLabel(
-                label = stringResource(R.string.screen_app_list_search_bottomsheet_include_system_app),
-                value = searchOption.isIncludeSystemApp,
-                onChange = { update(isIncludeSystemApp = it) }
             )
             SwitchWithLabel(
                 label = stringResource(R.string.screen_app_list_search_bottomsheet_only_register_app),
@@ -236,6 +274,10 @@ private fun AppListItem(
                 fontSize = 20.sp
             )
             Text(text = info.packageName)
+            Text(
+                text = stringResource(if (info.isSystemApp) R.string.screen_app_list_type_system else R.string.screen_app_list_type_installed),
+                style = MaterialTheme.typography.labelSmall
+            )
         }
         Switch(
             checked = info.isRegistered,

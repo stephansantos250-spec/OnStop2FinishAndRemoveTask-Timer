@@ -1,25 +1,25 @@
-COMPILAÇÃO E VALIDAÇÃO — TIMER
+COMPILAÇÃO E VALIDAÇÃO — TIMER 2 COM FILTROS
 
 Build integral: SUCESSO
 Comando: bash gradlew :app:testDebugUnitTest :app:assembleRelease --no-daemon
 Ferramentas: JDK 21, Android SDK 37.0, Build Tools 37.0.0, Gradle 9.5.0
-Testes: 9 passaram; 0 falhas; 0 erros.
+Testes: 13 passaram; 0 falhas; 0 erros.
   BackgroundTaskTimerTest: 8 testes
+  AppTypeFilterTest: 4 testes
   ExampleUnitTest: 1 teste
 
-APK: OnStop2FinishAndRemoveTask-Timer-1-a-5-min.apk
+APK: OnStop2FinishAndRemoveTask-Timer-2-filtros.apk
 Pacote: io.github.takusan23.onstop2finishandremovetask.timer
-Versão: 2.0.6-timer (8)
-Nome: OnStop2FinishAndRemoveTask Timer
-Assinatura: chave local exclusiva; verificada com apksigner (v3).
-Alinhamento ZIP e de bibliotecas nativas (16 KB): verificado.
-Integridade ZIP: verificada.
-Permissões: equivalentes ao APK original, normalizando a mudança de identificador.
-SHA-256 do APK:
-c8eb842ec7fe9ef427492c30b4dbc4450a61b272c8911ddf930aa4e98aac9c95
+Versão: 2.0.6-timer.2 (9)
+Assinatura: chave local; verificada; mesmo certificado da versão Timer anterior.
+Atualização sobre o primeiro APK Timer: pacote igual, código maior, certificado igual.
+Alinhamento ZIP/bibliotecas nativas (16 KB) e integridade ZIP: verificados.
+Permissões: idênticas às da versão Timer anterior.
+Depuração: desabilitada.
+Recursos Todos/Instalados/Sistema: presentes no APK compilado.
+SHA-256: a5ec6d2fb6bcc6c4c88f017d6410fa489a5a148e7cf7c0d53b18812d8f9c153a
 
 Não foi instalado nem testado em celular/emulador Android.
-O serviço exige Shizuku ativo e permissão concedida.
-Pare o serviço da versão original antes de usar a versão Timer.
-O temporizador remove tarefas; não força a parada de todos os processos do app.
-Contagens podem atrasar com suspensão/Doze e são canceladas ao encerrar o serviço.
+Requer Shizuku ativo e permissão. Pare o serviço da versão oficial original.
+Filtros exibem categorias; use o interruptor de cada app para selecioná-lo.
+Evite componentes essenciais do sistema. Remove tarefas, não força a parada de serviços.

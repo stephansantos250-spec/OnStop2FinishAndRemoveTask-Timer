@@ -28,4 +28,11 @@
     <string name="screen_setting_close_delay_title">Background close timer</string>
     <string name="screen_setting_close_delay_value">Delay: %1$d min</string>
     <string name="screen_setting_close_delay_description">Close selected apps after 1–5 minutes in the background. Reopening an app cancels its timer. Changing the delay restarts pending timers.</string>
+    <string name="screen_app_list_type_title">Show apps</string>
+    <string name="screen_app_list_filter_all">All</string>
+    <string name="screen_app_list_filter_installed">Installed</string>
+    <string name="screen_app_list_filter_system">System</string>
+    <string name="screen_app_list_type_system">System app</string>
+    <string name="screen_app_list_type_installed">User-installed app</string>
+    <string name="screen_app_list_system_warning">Avoid selecting essential system components: closing their tasks may disrupt your device.</string>
 </resources>
