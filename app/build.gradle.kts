@@ -15,7 +15,7 @@ android {
         applicationId = "io.github.takusan23.onstop2finishandremovetask"
         minSdk = 31
         targetSdk = 37
-        versionCode = 9
+        versionCode = 10
         versionName = "2.0.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -24,7 +24,7 @@ android {
     buildTypes {
         release {
             applicationIdSuffix = ".timer"
-            versionNameSuffix = "-timer.2"
+            versionNameSuffix = "-timer.3"
             optimization {
                 enable = true
             }
@@ -33,6 +33,15 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+        unitTests.all {
+            it.maxHeapSize = "1024m"
+            it.maxParallelForks = 1
+            it.systemProperty("robolectric.dependency.repo.url", "https://repo.maven.apache.org/maven2")
+            it.systemProperty("glass.screenshots.dir", layout.buildDirectory.dir("screenshots").get().asFile.absolutePath)
+        }
     }
     buildFeatures {
         compose = true
@@ -71,6 +80,10 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     testImplementation(libs.junit)
+    testImplementation("org.robolectric:robolectric:4.17")
+    testImplementation("androidx.test:core:1.7.0")
+    testImplementation(platform(libs.androidx.compose.bom))
+    testImplementation(libs.androidx.compose.ui.test.junit4)
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

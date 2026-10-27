@@ -1,25 +1,28 @@
-COMPILAÇÃO E VALIDAÇÃO — TIMER 2 COM FILTROS
+TIMER 3 — GLASS
 
-Build integral: SUCESSO
-Comando: bash gradlew :app:testDebugUnitTest :app:assembleRelease --no-daemon
-Ferramentas: JDK 21, Android SDK 37.0, Build Tools 37.0.0, Gradle 9.5.0
-Testes: 13 passaram; 0 falhas; 0 erros.
-  BackgroundTaskTimerTest: 8 testes
-  AppTypeFilterTest: 4 testes
-  ExampleUnitTest: 1 teste
-
-APK: OnStop2FinishAndRemoveTask-Timer-2-filtros.apk
+Versão: 2.0.6-timer.3; versionCode 10
 Pacote: io.github.takusan23.onstop2finishandremovetask.timer
-Versão: 2.0.6-timer.2 (9)
-Assinatura: chave local; verificada; mesmo certificado da versão Timer anterior.
-Atualização sobre o primeiro APK Timer: pacote igual, código maior, certificado igual.
-Alinhamento ZIP/bibliotecas nativas (16 KB) e integridade ZIP: verificados.
-Permissões: idênticas às da versão Timer anterior.
-Depuração: desabilitada.
-Recursos Todos/Instalados/Sistema: presentes no APK compilado.
-SHA-256: a5ec6d2fb6bcc6c4c88f017d6410fa489a5a148e7cf7c0d53b18812d8f9c153a
+APK: OnStop2FinishAndRemoveTask-Timer-3-Glass.apk
+SHA-256: c84439e77585c7ba15a26870ee02424a67396f39d007678580be7524fc3b66cc
 
-Não foi instalado nem testado em celular/emulador Android.
-Requer Shizuku ativo e permissão. Pare o serviço da versão oficial original.
-Filtros exibem categorias; use o interruptor de cada app para selecioná-lo.
-Evite componentes essenciais do sistema. Remove tarefas, não força a parada de serviços.
+Compilação :app:assembleRelease: SUCESSO
+Testes :app:testDebugUnitTest: 27 passaram; 0 falhas; 0 erros.
+- BackgroundTaskTimerTest: 8
+- AppTypeFilterTest: 4
+- ExampleUnitTest: 1
+- GlassUiTest: 13
+- SelectionPersistenceTest: 1
+
+Compilação: JDK 21, Android SDK 37.0, Build Tools 37.0.0, Gradle 9.5.0.
+Testes de tela: Robolectric 4.17, Android API 35, renderização nativa.
+12 capturas de interface geradas e inspecionadas; fixtures fictícias.
+
+APK com certificado igual ao Timer 2, pacote igual e código de versão maior.
+Assinatura validada por apksigner. Integridade ZIP e alinhamento de 16 KB verificados.
+Mesmas permissões do Timer 2. Depuração desabilitada.
+Nenhuma chave privada ou credencial incluída neste pacote de código-fonte.
+
+NÃO TESTADO EM CELULAR FÍSICO/EMULADOR COM SHIZUKU.
+Não houve benchmark físico de FPS, bateria ou memória.
+Inspiração Liquid Glass com Material 3; sem blur/refração em tempo real.
+Remove tarefas, não força a parada de todos os serviços/processos.

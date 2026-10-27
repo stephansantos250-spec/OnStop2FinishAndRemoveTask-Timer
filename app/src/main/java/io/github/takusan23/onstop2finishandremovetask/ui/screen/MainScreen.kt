@@ -48,11 +48,11 @@ fun MainScreen() {
                 }
 
                 RoutePaths.Setting -> NavEntry(RoutePaths.Setting) {
-                    SettingScreen(onNavigation = { backStack += it })
+                    SettingScreen(onNavigation = { backStack += it }, onBack = { backStack.removeLastOrNull() })
                 }
 
                 RoutePaths.License -> NavEntry(RoutePaths.License) {
-                    LicenseScreen()
+                    LicenseScreen(onBack = { backStack.removeLastOrNull() })
                 }
             }
         }

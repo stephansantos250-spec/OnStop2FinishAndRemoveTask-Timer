@@ -8,3 +8,6 @@ Modifications in this repository add a configurable background task timer,
 Portuguese settings, and system/user-installed app category filters.
 Modified versions use a separate application ID and a separate signing key.
 This is an unofficial derivative; no endorsement by the original author is implied.
+
+Timer 3 modifications also add a Material 3 glass-inspired interface,
+short UI animations, background package metadata loading, and atomic app selection writes.

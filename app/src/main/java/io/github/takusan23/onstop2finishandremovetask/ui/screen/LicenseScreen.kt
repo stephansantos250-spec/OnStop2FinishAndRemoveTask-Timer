@@ -1,5 +1,12 @@
 package io.github.takusan23.onstop2finishandremovetask.ui.screen
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.graphics.Color
+import androidx.compose.material3.MaterialTheme
+import io.github.takusan23.onstop2finishandremovetask.ui.component.GlassBackdrop
+import io.github.takusan23.onstop2finishandremovetask.ui.component.GlassPanel
+import io.github.takusan23.onstop2finishandremovetask.ui.component.GlassTopBar
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -115,32 +122,20 @@ private val LicenseList = listOf(
     aosp
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LicenseScreen() {
-    Scaffold(
-        topBar = { TopAppBar(title = { Text(stringResource(R.string.screen_license_title)) }) }
-    ) { innerPadding ->
-        LazyColumn(contentPadding = innerPadding) {
-            items(LicenseList) { licenseData ->
-                LicenseItem(licenseData = licenseData)
-                HorizontalDivider()
+fun LicenseScreen(onBack: () -> Unit = {}) {
+    GlassBackdrop {
+        Scaffold(containerColor = Color.Transparent, topBar = {
+            GlassTopBar(stringResource(R.string.screen_license_title), onBack = onBack)
+        }) { padding ->
+            LazyColumn(modifier = Modifier.padding(padding), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                items(LicenseList) { licenseData ->
+                    GlassPanel {
+                        Text(licenseData.name, style = MaterialTheme.typography.titleMedium)
+                        Text(licenseData.license, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                }
             }
         }
-    }
-}
-
-@Composable
-private fun LicenseItem(licenseData: LicenseData) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Text(
-            modifier = Modifier.padding(5.dp),
-            text = licenseData.name,
-            fontSize = 25.sp
-        )
-        Text(
-            text = licenseData.license,
-            modifier = Modifier.padding(start = 5.dp, end = 5.dp)
-        )
     }
 }

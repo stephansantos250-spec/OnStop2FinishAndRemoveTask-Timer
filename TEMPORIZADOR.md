@@ -14,7 +14,7 @@
 
 ## Como usar / compilar
 
-Este ZIP contém **código-fonte**. O APK assinado atualizado é fornecido separadamente como `OnStop2FinishAndRemoveTask-Timer-2-filtros.apk`. Consulte `APP_FILTROS.md` para os filtros Todos/Instalados/Sistema. A modificação não foi publicada no repositório do autor.
+Este ZIP contém **código-fonte**. O APK assinado atualizado é fornecido separadamente como `OnStop2FinishAndRemoveTask-Timer-3-Glass.apk`. Consulte `APP_FILTROS.md` para os filtros Todos/Instalados/Sistema. A modificação não foi publicada no repositório do autor.
 
 1. Extraia o ZIP e abra a pasta do projeto no Android Studio atualizado.
 2. Instale o SDK exigido pelo projeto: **API 37**. Preserve o Gradle e as versões de dependências existentes no repositório.
@@ -38,7 +38,7 @@ Multijanela/tela dividida, tela bloqueada e particularidades de fabricantes prec
 - Oito testes unitários JVM passaram, com tempo virtual: prazos de 1 a 5 minutos, reabertura, reinício da contagem, tarefas independentes, alteração do prazo, desmarcação, remoção/parada e exclusão de apps não selecionados.
 - O núcleo Kotlin `BackgroundTaskTimer` e seu teste foram compilados isoladamente com Kotlin 2.1.20, coroutines 1.10.2 e JUnit 4.13.2.
 - XML das traduções validado e `git diff --check` sem erros.
-- Compilação integral concluída com sucesso: `:app:testDebugUnitTest :app:assembleRelease`. Treze testes passaram (oito da lógica do timer, quatro dos filtros e um teste existente do projeto).
+- Compilação integral concluída com sucesso: `:app:testDebugUnitTest :app:assembleRelease`. Vinte e sete testes passaram. Veja VALIDACAO_ANDROID.txt para a composição e INTERFACE_GLASS.md para a interface.
 - APK release alinhado para páginas de 16 KB e assinado com chave local. Assinatura verificada com `apksigner`; integridade ZIP e alinhamento verificados. Permissões equivalentes às do APK original, considerando a mudança de identificador.
 - **Não testado em celular/emulador Android.** É necessário validar a integração com Shizuku e o comportamento no dispositivo. Consulte `VALIDACAO_ANDROID.txt`.
 
