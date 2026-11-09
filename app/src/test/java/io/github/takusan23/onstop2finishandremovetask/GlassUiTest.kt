@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.test.*
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.junit4.createComposeRule
 import io.github.takusan23.onstop2finishandremovetask.tool.AppTypeFilter
 import io.github.takusan23.onstop2finishandremovetask.ui.screen.*
@@ -54,33 +55,41 @@ class GlassUiTest {
     }
     @Test fun mainLight() {
         rule.setContent { OnStop2FinishAndRemoveTaskTheme(darkTheme = false) {
-            GlassAppListContent(fixtures, AppListViewModel.SearchOption(), 2, 3, loadIcons = false)
+            GlassAppListContent(fixtures, AppListViewModel.SearchOption(), 2, 30, loadIcons = false)
         } }
         rule.onNodeWithText("Todos").assertIsDisplayed()
         shot("main-light")
     }
     @Test fun mainDark() {
         rule.setContent { OnStop2FinishAndRemoveTaskTheme(darkTheme = true) {
-            GlassAppListContent(fixtures, AppListViewModel.SearchOption(), 2, 3, loadIcons = false)
+            GlassAppListContent(fixtures, AppListViewModel.SearchOption(), 2, 30, loadIcons = false)
         } }
         shot("main-dark")
     }
     @Test fun settingsLightAndPresetInteraction() {
         var selected = 3
         rule.setContent { OnStop2FinishAndRemoveTaskTheme(darkTheme = false) {
-            GlassSettingsContent(3, onMinutes = { selected = it })
+            GlassSettingsContent(30, onSeconds = { selected = it })
         } }
         shot("settings-light")
-        rule.onNodeWithText("5").performClick()
-        rule.runOnIdle { assertEquals(5, selected) }
+        rule.onNodeWithText("50").performClick()
+        rule.runOnIdle { assertEquals(50, selected) }
+    }
+    @Test fun sliderAcceptsIndividualSeconds() {
+        var selected = 60
+        rule.setContent { OnStop2FinishAndRemoveTaskTheme(darkTheme = false) {
+            GlassSettingsContent(60, onSeconds = { selected = it })
+        } }
+        rule.onNodeWithTag("delay_slider").performSemanticsAction(SemanticsActions.SetProgress) { it(27f) }
+        rule.runOnIdle { assertEquals(27, selected) }
     }
     @Test fun settingsDark() {
-        rule.setContent { OnStop2FinishAndRemoveTaskTheme(darkTheme = true) { GlassSettingsContent(3) } }
+        rule.setContent { OnStop2FinishAndRemoveTaskTheme(darkTheme = true) { GlassSettingsContent(30) } }
         shot("settings-dark")
     }
     @Test fun emptyCategoryHasActionableMessage() {
         rule.setContent { OnStop2FinishAndRemoveTaskTheme(darkTheme = false) {
-            GlassAppListContent(emptyList(), AppListViewModel.SearchOption(appType = AppTypeFilter.INSTALLED), 0, 1, loadIcons = false)
+            GlassAppListContent(emptyList(), AppListViewModel.SearchOption(appType = AppTypeFilter.INSTALLED), 0, 60, loadIcons = false)
         } }
         rule.onNodeWithText("Nenhum app por aqui").assertIsDisplayed()
         shot("empty-light")
@@ -89,7 +98,7 @@ class GlassUiTest {
         rule.setContent {
             CompositionLocalProvider(LocalDensity provides Density(1f, 1.25f)) {
                 OnStop2FinishAndRemoveTaskTheme(darkTheme = false) {
-                    GlassAppListContent(fixtures, AppListViewModel.SearchOption(appType = AppTypeFilter.INSTALLED), 2, 5, loadIcons = false)
+                    GlassAppListContent(fixtures, AppListViewModel.SearchOption(appType = AppTypeFilter.INSTALLED), 2, 50, loadIcons = false)
                 }
             }
         }
@@ -110,7 +119,7 @@ class GlassUiTest {
     }
     @Test fun searchSheet() {
         rule.setContent { OnStop2FinishAndRemoveTaskTheme(darkTheme = false) {
-            GlassAppListContent(fixtures, AppListViewModel.SearchOption(), 2, 3, loadIcons = false)
+            GlassAppListContent(fixtures, AppListViewModel.SearchOption(), 2, 30, loadIcons = false)
             SearchBottomSheet({}, AppListViewModel.SearchOption(), {})
         } }
         shot("search-light")
@@ -118,7 +127,7 @@ class GlassUiTest {
     @Test fun categorySelectionCallback() {
         var selected = AppTypeFilter.ALL
         rule.setContent { OnStop2FinishAndRemoveTaskTheme(darkTheme = false) {
-            GlassAppListContent(fixtures, AppListViewModel.SearchOption(), 2, 3,
+            GlassAppListContent(fixtures, AppListViewModel.SearchOption(), 2, 30,
                 onOption = { selected = it.appType }, loadIcons = false)
         } }
         rule.onNodeWithText("Sistema").performClick()
@@ -127,7 +136,7 @@ class GlassUiTest {
     @Test fun selectingAnAppUpdatesItsCard() {
         var apps by mutableStateOf(fixtures)
         rule.setContent { OnStop2FinishAndRemoveTaskTheme(darkTheme = false) {
-            GlassAppListContent(apps, AppListViewModel.SearchOption(), apps.count { it.isRegistered }, 3,
+            GlassAppListContent(apps, AppListViewModel.SearchOption(), apps.count { it.isRegistered }, 30,
                 onCheck = { checked, packageName ->
                     apps = apps.map { if (it.packageName == packageName) it.copy(isRegistered = checked) else it }
                 }, loadIcons = false)
@@ -138,7 +147,7 @@ class GlassUiTest {
     }
     @Test fun systemCategoryDark() {
         rule.setContent { OnStop2FinishAndRemoveTaskTheme(darkTheme = true) {
-            GlassAppListContent(fixtures.filter { it.isSystemApp }, AppListViewModel.SearchOption(appType = AppTypeFilter.SYSTEM), 2, 3, loadIcons = false)
+            GlassAppListContent(fixtures.filter { it.isSystemApp }, AppListViewModel.SearchOption(appType = AppTypeFilter.SYSTEM), 2, 30, loadIcons = false)
         } }
         shot("system-dark")
     }
@@ -146,7 +155,7 @@ class GlassUiTest {
         var option by mutableStateOf(AppListViewModel.SearchOption())
         var lastAction: Pair<Boolean, AppTypeFilter>? = null
         rule.setContent { OnStop2FinishAndRemoveTaskTheme(darkTheme = false) {
-            GlassAppListContent(fixtures, option, 2, 3,
+            GlassAppListContent(fixtures, option, 2, 30,
                 onOption = { option = it }, onCategoryCheck = { checked, category -> lastAction = checked to category },
                 loadIcons = false)
         } }
@@ -163,5 +172,14 @@ class GlassUiTest {
         rule.runOnIdle { assertEquals(true to AppTypeFilter.SYSTEM, lastAction) }
         rule.onNodeWithText("Desmarcar todos").performScrollTo().performClick()
         rule.runOnIdle { assertEquals(false to AppTypeFilter.SYSTEM, lastAction) }
+    }
+    @Test @Config(qualifiers = "pt-rBR-w320dp-h740dp-port-mdpi") fun settingsNarrowLargeText() {
+        rule.setContent {
+            CompositionLocalProvider(LocalDensity provides Density(1f, 1.25f)) {
+                OnStop2FinishAndRemoveTaskTheme(darkTheme = false) { GlassSettingsContent(30) }
+            }
+        }
+        rule.onNodeWithText("segundos").assertIsDisplayed()
+        shot("settings-narrow-large-text")
     }
 }

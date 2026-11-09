@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -35,8 +36,8 @@ import kotlin.math.roundToInt
 fun SettingScreen(onNavigation: (RoutePaths) -> Unit, onBack: () -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val minutes by remember(context) { CloseDelaySettings.observe(context) }.collectAsState(initial = 1)
-    GlassSettingsContent(minutes, onMinutes = { selected -> scope.launch { CloseDelaySettings.save(context, selected) } },
+    val seconds by remember(context) { CloseDelaySettings.observe(context) }.collectAsState(initial = CloseDelaySettings.DEFAULT_SECONDS)
+    GlassSettingsContent(seconds, onSeconds = { selected -> scope.launch { CloseDelaySettings.save(context, selected) } },
         onBack = onBack, onStop = { OnStop2FinishAndRemoveTaskService.stop(context) },
         onLicense = { onNavigation(RoutePaths.License) },
         onGitHub = { context.startActivity(Intent(Intent.ACTION_VIEW,
@@ -44,10 +45,10 @@ fun SettingScreen(onNavigation: (RoutePaths) -> Unit, onBack: () -> Unit) {
 }
 
 @Composable
-internal fun GlassSettingsContent(minutes: Int, onMinutes: (Int) -> Unit = {}, onBack: () -> Unit = {},
+internal fun GlassSettingsContent(seconds: Int, onSeconds: (Int) -> Unit = {}, onBack: () -> Unit = {},
     onStop: () -> Unit = {}, onLicense: () -> Unit = {}, onGitHub: () -> Unit = {}) {
-    var draft by remember(minutes) { mutableFloatStateOf(minutes.toFloat()) }
-    val arc by animateFloatAsState(draft / 5f, tween(220), label = "timerArc")
+    var draft by remember(seconds) { mutableFloatStateOf(seconds.toFloat()) }
+    val arc by animateFloatAsState(draft / 60f, tween(220), label = "timerArc")
     val primary = MaterialTheme.colorScheme.primary
     val track = MaterialTheme.colorScheme.outlineVariant
     GlassBackdrop {
@@ -70,15 +71,19 @@ internal fun GlassSettingsContent(minutes: Int, onMinutes: (Int) -> Unit = {}, o
                                 AnimatedContent(draft.roundToInt(), label = "timerNumber") {
                                     Text(it.toString(), fontSize = 52.sp, fontWeight = FontWeight.Bold, color = primary)
                                 }
-                                Text("min", style = MaterialTheme.typography.bodySmall)
+                                Text(stringResource(R.string.glass_seconds_unit), style = MaterialTheme.typography.bodySmall)
                             }
                         }
-                        Slider(value = draft, onValueChange = { draft = it }, valueRange = 1f..5f, steps = 3,
-                            onValueChangeFinished = { onMinutes(draft.roundToInt().coerceIn(1, 5)) })
-                        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                            (1..5).forEach { value ->
-                                FilterChip(modifier = Modifier.weight(1f), selected = draft.roundToInt() == value,
-                                    onClick = { draft = value.toFloat(); onMinutes(value) }, label = { Text(value.toString()) })
+                        Text(stringResource(R.string.glass_seconds_hint), style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Slider(modifier = Modifier.testTag("delay_slider"), value = draft,
+                            onValueChange = { draft = it.roundToInt().toFloat() }, valueRange = 20f..60f,
+                            onValueChangeFinished = { onSeconds(draft.roundToInt().coerceIn(20, 60)) })
+                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            listOf(20, 30, 40, 50, 60).forEach { value ->
+                                FilterChip(selected = draft.roundToInt() == value,
+                                    onClick = { draft = value.toFloat(); onSeconds(value) },
+                                    label = { Text(value.toString(), maxLines = 1, softWrap = false) })
                             }
                         }
                         Text(stringResource(R.string.glass_timer_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)

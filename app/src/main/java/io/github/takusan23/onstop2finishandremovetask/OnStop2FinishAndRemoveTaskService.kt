@@ -236,8 +236,8 @@ class OnStop2FinishAndRemoveTaskService : Service() {
             combine(
                 RegisterAppListTool.realtimeReadApplicationIdList(this@OnStop2FinishAndRemoveTaskService),
                 CloseDelaySettings.observe(this@OnStop2FinishAndRemoveTaskService)
-            ) { packages, minutes -> packages.toSet() to minutes }
-                .collect { (packages, minutes) -> taskTimer.configure(packages, minutes) }
+            ) { packages, seconds -> packages.toSet() to seconds }
+                .collect { (packages, seconds) -> taskTimer.configure(packages, seconds) }
         }
         scope.launch {
             try {
