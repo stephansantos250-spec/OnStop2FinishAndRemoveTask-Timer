@@ -16,14 +16,14 @@ class BackgroundTaskTimerTest {
     private val home = BackgroundTaskTimer.Task(3, "home", "Home")
 
     @Test fun eachSelectableDelayExpiresOnlyAfterItsDeadline() = runTest {
-        for (minutes in 1..5) {
+        for (seconds in 20..60) {
             val closed = mutableListOf<BackgroundTaskTimer.Task>()
             val timer = BackgroundTaskTimer(this, closed::add)
-            timer.configure(setOf("a"), minutes)
+            timer.configure(setOf("a"), seconds)
             timer.onForeground(a)
             timer.onForeground(home)
             runCurrent()
-            advanceTimeBy(minutes * 60_000L - 1)
+            advanceTimeBy(seconds * 1_000L - 1)
             runCurrent()
             assertTrue(closed.isEmpty())
             advanceTimeBy(1)
@@ -35,7 +35,7 @@ class BackgroundTaskTimerTest {
     @Test fun reopeningCancelsAndNextExitStartsFresh() = runTest {
         val closed = mutableListOf<BackgroundTaskTimer.Task>()
         val timer = BackgroundTaskTimer(this, closed::add)
-        timer.configure(setOf("a"), 1)
+        timer.configure(setOf("a"), 60)
         timer.onForeground(a)
         timer.onForeground(home)
         runCurrent()
@@ -53,7 +53,7 @@ class BackgroundTaskTimerTest {
     @Test fun switchingBetweenSelectedAppsKeepsIndependentTimers() = runTest {
         val closed = mutableListOf<BackgroundTaskTimer.Task>()
         val timer = BackgroundTaskTimer(this, closed::add)
-        timer.configure(setOf("a", "b"), 1)
+        timer.configure(setOf("a", "b"), 60)
         timer.onForeground(a)
         timer.onForeground(b)
         runCurrent()
@@ -71,14 +71,14 @@ class BackgroundTaskTimerTest {
     @Test fun changingDelayRestartsPendingCountdown() = runTest {
         val closed = mutableListOf<BackgroundTaskTimer.Task>()
         val timer = BackgroundTaskTimer(this, closed::add)
-        timer.configure(setOf("a"), 1)
+        timer.configure(setOf("a"), 60)
         timer.onForeground(a)
         timer.onForeground(home)
         runCurrent()
         advanceTimeBy(30_000)
-        timer.configure(setOf("a"), 2)
+        timer.configure(setOf("a"), 40)
         runCurrent()
-        advanceTimeBy(119_999)
+        advanceTimeBy(39_999)
         runCurrent()
         assertTrue(closed.isEmpty())
         advanceTimeBy(1)
@@ -89,11 +89,11 @@ class BackgroundTaskTimerTest {
     @Test fun deselectingAppCancelsItsTimer() = runTest {
         val closed = mutableListOf<BackgroundTaskTimer.Task>()
         val timer = BackgroundTaskTimer(this, closed::add)
-        timer.configure(setOf("a"), 1)
+        timer.configure(setOf("a"), 60)
         timer.onForeground(a)
         timer.onForeground(home)
         runCurrent()
-        timer.configure(emptySet(), 1)
+        timer.configure(emptySet(), 60)
         advanceTimeBy(120_000)
         runCurrent()
         assertTrue(closed.isEmpty())
@@ -102,7 +102,7 @@ class BackgroundTaskTimerTest {
     @Test fun removingTaskOrStoppingServiceCancelsPendingTimers() = runTest {
         val closed = mutableListOf<BackgroundTaskTimer.Task>()
         val timer = BackgroundTaskTimer(this, closed::add)
-        timer.configure(setOf("a", "b"), 1)
+        timer.configure(setOf("a", "b"), 60)
         timer.onForeground(a)
         timer.onForeground(b)
         timer.onForeground(home)
@@ -117,7 +117,7 @@ class BackgroundTaskTimerTest {
     @Test fun anotherTaskOfSamePackageCancelsTheTimer() = runTest {
         val closed = mutableListOf<BackgroundTaskTimer.Task>()
         val timer = BackgroundTaskTimer(this, closed::add)
-        timer.configure(setOf("a"), 1)
+        timer.configure(setOf("a"), 60)
         timer.onForeground(a)
         timer.onForeground(home)
         runCurrent()
@@ -130,7 +130,7 @@ class BackgroundTaskTimerTest {
     @Test fun unselectedAppsAreNeverClosed() = runTest {
         val closed = mutableListOf<BackgroundTaskTimer.Task>()
         val timer = BackgroundTaskTimer(this, closed::add)
-        timer.configure(setOf("a"), 1)
+        timer.configure(setOf("a"), 60)
         timer.onForeground(b)
         timer.onForeground(home)
         advanceTimeBy(120_000)

@@ -18,11 +18,11 @@ class BackgroundTaskTimer(
     private var delayMillis = 60_000L
     private var foreground: Task? = null
 
-    fun configure(packages: Set<String>, minutes: Int) {
+    fun configure(packages: Set<String>, seconds: Int) {
         registered = packages
         pending.values.filter { it.task.packageName !in packages }
             .map { it.task.id }.forEach(::onTaskRemoved)
-        val newDelay = minutes.coerceIn(1, 5) * 60_000L
+        val newDelay = seconds.coerceIn(CloseDelaySettings.MIN_SECONDS, CloseDelaySettings.MAX_SECONDS) * 1_000L
         if (newDelay != delayMillis) {
             val tasks = pending.values.map { it.task }
             cancelAll()

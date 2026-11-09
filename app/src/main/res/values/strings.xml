@@ -26,8 +26,8 @@
     <string name="screen_app_list_permission_card_button">Grant</string>
     <string name="screen_app_list_permission_card_title">If granted notification permission, stoppable service from notification area. (optional)</string>
     <string name="screen_setting_close_delay_title">Background close timer</string>
-    <string name="screen_setting_close_delay_value">Delay: %1$d min</string>
-    <string name="screen_setting_close_delay_description">Close selected apps after 1–5 minutes in the background. Reopening an app cancels its timer. Changing the delay restarts pending timers.</string>
+    <string name="screen_setting_close_delay_value">Delay: %1$d s</string>
+    <string name="screen_setting_close_delay_description">Close selected apps after 20–60 seconds in the background. Reopening an app cancels its timer. Changing the delay restarts pending timers.</string>
     <string name="screen_app_list_type_title">Show apps</string>
     <string name="screen_app_list_filter_all">All</string>
     <string name="screen_app_list_filter_installed">Installed</string>
@@ -64,4 +64,6 @@
     <string name="bulk_system_confirm_body">Essential system components will also be selected. Closing their tasks may disrupt your device.</string>
     <string name="bulk_confirm">Select system apps</string>
     <string name="bulk_cancel">Cancel</string>
+    <string name="glass_seconds_unit">seconds</string>
+    <string name="glass_seconds_hint">Adjust from 20 to 60 seconds, one second at a time.</string>
 </resources>

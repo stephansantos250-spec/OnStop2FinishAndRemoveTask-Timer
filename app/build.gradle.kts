@@ -15,7 +15,7 @@ android {
         applicationId = "io.github.takusan23.onstop2finishandremovetask"
         minSdk = 31
         targetSdk = 37
-        versionCode = 11
+        versionCode = 12
         versionName = "2.0.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -24,7 +24,7 @@ android {
     buildTypes {
         release {
             applicationIdSuffix = ".timer"
-            versionNameSuffix = "-timer.4-glass"
+            versionNameSuffix = "-timer.4-glass.2"
             optimization {
                 enable = true
             }

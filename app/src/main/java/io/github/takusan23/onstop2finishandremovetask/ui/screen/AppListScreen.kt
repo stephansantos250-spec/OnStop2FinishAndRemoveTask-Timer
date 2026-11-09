@@ -51,11 +51,11 @@ fun AppListScreen(viewModel: AppListViewModel, onNavigate: (RoutePaths) -> Unit)
     val appList by viewModel.appListFlow.collectAsState()
     val option by viewModel.searchOptionFlow.collectAsState()
     val count by viewModel.selectedCountFlow.collectAsState(0)
-    val minutes by viewModel.closeDelayFlow.collectAsState(1)
+    val seconds by viewModel.closeDelayFlow.collectAsState(60)
     val loading by viewModel.loadingFlow.collectAsState()
     var search by rememberSaveable { mutableStateOf(false) }
     if (search) SearchBottomSheet({ search = false }, option, viewModel::updateSearchOption)
-    GlassAppListContent(appList, option, count, minutes, loading,
+    GlassAppListContent(appList, option, count, seconds, loading,
         onOption = viewModel::updateSearchOption, onCheck = viewModel::registerApp,
         onCategoryCheck = viewModel::registerCategory,
         onSearch = { search = true }, onSettings = { onNavigate(RoutePaths.Setting) },
@@ -65,7 +65,7 @@ fun AppListScreen(viewModel: AppListViewModel, onNavigate: (RoutePaths) -> Unit)
 @Composable
 internal fun GlassAppListContent(
     apps: List<AppListViewModel.AppInfo>, option: AppListViewModel.SearchOption,
-    selectedCount: Int, minutes: Int, loading: Boolean = false,
+    selectedCount: Int, seconds: Int, loading: Boolean = false,
     onOption: (AppListViewModel.SearchOption) -> Unit = {},
     onCheck: (Boolean, String) -> Unit = { _, _ -> },
     onCategoryCheck: (Boolean, AppTypeFilter) -> Unit = { _, _ -> },
@@ -109,7 +109,7 @@ internal fun GlassAppListContent(
                                 Text(stringResource(R.string.glass_selected), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                             Column(Modifier.weight(1f)) {
-                                AnimatedContent(minutes, label = "summaryMinutes") { Text("$it min", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary) }
+                                AnimatedContent(seconds, label = "summarySeconds") { Text("$it s", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary) }
                                 Text(stringResource(R.string.glass_delay_label), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                         }
