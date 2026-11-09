@@ -57,6 +57,7 @@ fun AppListScreen(viewModel: AppListViewModel, onNavigate: (RoutePaths) -> Unit)
     if (search) SearchBottomSheet({ search = false }, option, viewModel::updateSearchOption)
     GlassAppListContent(appList, option, count, minutes, loading,
         onOption = viewModel::updateSearchOption, onCheck = viewModel::registerApp,
+        onCategoryCheck = viewModel::registerCategory,
         onSearch = { search = true }, onSettings = { onNavigate(RoutePaths.Setting) },
         notification = { NotificationPermissionCard() })
 }
@@ -67,9 +68,25 @@ internal fun GlassAppListContent(
     selectedCount: Int, minutes: Int, loading: Boolean = false,
     onOption: (AppListViewModel.SearchOption) -> Unit = {},
     onCheck: (Boolean, String) -> Unit = { _, _ -> },
+    onCategoryCheck: (Boolean, AppTypeFilter) -> Unit = { _, _ -> },
     onSearch: () -> Unit = {}, onSettings: () -> Unit = {},
     loadIcons: Boolean = true, notification: @Composable () -> Unit = {}
 ) {
+    var confirmSystemSelection by remember { mutableStateOf(false) }
+    if (confirmSystemSelection) {
+        AlertDialog(
+            onDismissRequest = { confirmSystemSelection = false },
+            title = { Text(stringResource(R.string.bulk_system_confirm_title)) },
+            text = { Text(stringResource(R.string.bulk_system_confirm_body)) },
+            confirmButton = { TextButton(onClick = {
+                confirmSystemSelection = false
+                onCategoryCheck(true, AppTypeFilter.SYSTEM)
+            }) { Text(stringResource(R.string.bulk_confirm)) } },
+            dismissButton = { TextButton(onClick = { confirmSystemSelection = false }) {
+                Text(stringResource(R.string.bulk_cancel))
+            } }
+        )
+    }
     GlassBackdrop {
         Scaffold(containerColor = androidx.compose.ui.graphics.Color.Transparent, topBar = {
             GlassTopBar("Timer", stringResource(R.string.glass_app_subtitle)) {
@@ -115,6 +132,21 @@ internal fun GlassAppListContent(
                                 FilterChip(selected = option.appType == type,
                                     onClick = { onOption(option.copy(appType = type)) },
                                     label = { Text(stringResource(label)) })
+                            }
+                        }
+                        if (option.appType != AppTypeFilter.ALL) {
+                            val category = option.appType
+                            Text(stringResource(if (category == AppTypeFilter.INSTALLED)
+                                R.string.bulk_installed_scope else R.string.bulk_system_scope),
+                                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                OutlinedButton(enabled = !loading, onClick = {
+                                    if (category == AppTypeFilter.SYSTEM) confirmSystemSelection = true
+                                    else onCategoryCheck(true, category)
+                                }) { Text(stringResource(R.string.bulk_select)) }
+                                OutlinedButton(enabled = !loading, onClick = {
+                                    onCategoryCheck(false, category)
+                                }) { Text(stringResource(R.string.bulk_clear)) }
                             }
                         }
                         if (option.appType != AppTypeFilter.INSTALLED) Text(

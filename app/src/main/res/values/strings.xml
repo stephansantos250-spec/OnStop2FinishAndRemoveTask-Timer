@@ -36,7 +36,7 @@
     <string name="screen_app_list_type_installed">User-installed app</string>
     <string name="screen_app_list_system_warning">Avoid selecting essential system components: closing their tasks may disrupt your device.</string>
     <string name="glass_back">Back</string>
-    <string name="glass_app_subtitle">Background, under control</string>
+    <string name="glass_app_subtitle">In the background</string>
     <string name="glass_hero_title">At your own pace.</string>
     <string name="glass_hero_subtitle">Choose your apps. Set the time. Let the rest go.</string>
     <string name="glass_selected">Selected apps</string>
@@ -56,4 +56,12 @@
     <string name="glass_permission_title">One last permission.</string>
     <string name="glass_connect_steps_title">Three simple steps</string>
     <string name="glass_connect_steps">1. Install and start Shizuku.\n2. Grant permission to Timer.\n3. Choose your apps and set the timer.</string>
+    <string name="bulk_installed_scope">Applies to all installed apps, including those hidden by search. System apps are unchanged.</string>
+    <string name="bulk_system_scope">Applies to all system apps, including those hidden by search. Installed apps are unchanged.</string>
+    <string name="bulk_select">Select all</string>
+    <string name="bulk_clear">Deselect all</string>
+    <string name="bulk_system_confirm_title">Select all system apps?</string>
+    <string name="bulk_system_confirm_body">Essential system components will also be selected. Closing their tasks may disrupt your device.</string>
+    <string name="bulk_confirm">Select system apps</string>
+    <string name="bulk_cancel">Cancel</string>
 </resources>

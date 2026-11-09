@@ -29,4 +29,15 @@ class SelectionPersistenceTest {
         }
         assertEquals((11..20).map { "sample.app.$it" }.toSet(), RegisterAppListTool.readApplicationIdList(context).toSet())
     }
+    @Test fun bulkSelectionOnlyChangesTargetPackages() = runBlocking {
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        RegisterAppListTool.saveApplicationIdList(context, listOf("system.one", "other"))
+        RegisterAppListTool.setApplicationsRegistered(context, setOf("installed.one", "installed.two"), true)
+        assertEquals(setOf("system.one", "other", "installed.one", "installed.two"), RegisterAppListTool.readApplicationIdList(context).toSet())
+        RegisterAppListTool.setApplicationsRegistered(context, setOf("installed.one", "installed.two"), false)
+        assertEquals(setOf("system.one", "other"), RegisterAppListTool.readApplicationIdList(context).toSet())
+        RegisterAppListTool.setApplicationsRegistered(context, emptySet(), true)
+        assertEquals(setOf("system.one", "other"), RegisterAppListTool.readApplicationIdList(context).toSet())
+    }
+
 }
