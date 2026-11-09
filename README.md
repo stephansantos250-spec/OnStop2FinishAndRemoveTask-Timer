@@ -10,19 +10,19 @@ Versão modificada e **não oficial** do [OnStop2FinishAndRemoveTask](https://gi
 | **Timer 2** — `2.0.6-timer.2` | Timer de 1–5 min; filtros **Todos / Instalados / Sistema**; identificação do tipo de app | [Release Timer 2](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer.2) |
 | **Timer 1** — `2.0.6-timer` | Timer de 1–5 min; cancelamento ao reabrir; configuração salva | [Release Timer 1](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer) |
 
-Cada release inclui o **APK assinado**, o **ZIP do código-fonte correspondente** e as **somas SHA-256**. O ramo `main` contém a versão Timer 3 Glass. As tags preservam o código de cada versão.
+As releases anteriores incluem o **APK assinado**, o **ZIP do código-fonte correspondente** e as **somas SHA-256**. O ramo `main` contém o código da versão **Timer 4 Glass** (`2.0.6-timer.4-glass`); as tags preservam as versões anteriores. O APK da compilação local Timer 4 usa uma assinatura diferente e não atualiza diretamente os APKs anteriores; leia [LEIA-ESTA-VERSAO.md](LEIA-ESTA-VERSAO.md).
 
-## Interface Glass — Timer 3
+## Interface Glass — Timer 4
 
-Interface nativa de **Material 3 / Jetpack Compose**, com visual inspirado em Liquid Glass: cartões translúcidos, gradientes estáticos, temas claro/escuro, transições curtas e seletor circular de 1 a 5 minutos.
+Interface nativa de **Material 3 / Jetpack Compose**, com visual inspirado em Liquid Glass: barra e cartões translúcidos, gradientes estáticos, temas claro/escuro, transições curtas e seletor circular de 1 a 5 minutos.
 
 A consulta de nomes e metadados dos apps foi movida para IO e compartilhada no ViewModel; ícones são carregados fora da thread da interface e redimensionados. As gravações de seleção agora são atômicas, evitando perda de escolhas em cliques rápidos.
 
 Para manter o visual leve, não há blur/refração em tempo real nem animações decorativas contínuas. Não foi feito benchmark físico de FPS, bateria ou memória. Material 3 é a base Android; “Liquid Glass” é uma inspiração visual, não um framework da Apple ou integração de shaders MaterialX.
 
-**Validação:** 27 testes passaram; 12 estados da interface foram renderizados e revisados em Robolectric, incluindo modo escuro e 320 dp com fonte ampliada. As capturas usam apps fictícios. Ainda é necessário testar em celular com Shizuku.
+**Validação:** a compilação de release e 29 testes automatizados passaram. Telas com apps fictícios foram renderizadas em Robolectric; ainda é necessário testar em celular com Shizuku.
 
-Prévia: [tela clara](docs/previews/main-light.png), [tela escura](docs/previews/main-dark.png), [configurações](docs/previews/settings-light.png). Todas as prévias estão em [docs/previews](docs/previews).
+Prévias da versão Timer 3: [tela clara](docs/previews/main-light.png), [tela escura](docs/previews/main-dark.png), [configurações](docs/previews/settings-light.png). Todas as prévias estão em [docs/previews](docs/previews).
 
 ## Instalação
 
@@ -40,7 +40,8 @@ A Timer 3 pode atualizar as versões Timer 1 e Timer 2 **sem desinstalar**, pois
 - Reabrir o mesmo app cancela seu fechamento pendente; sair novamente inicia uma contagem completa.
 - Desmarcar um app, remover sua tarefa ou parar o serviço cancela a contagem correspondente.
 - Alterar o prazo reinicia as contagens pendentes com o novo tempo.
-- Nas versões Timer 2 e Timer 3, os filtros de categoria mudam somente a lista exibida; não apagam as seleções.
+- Nas versões Timer 2 em diante, os filtros de categoria mudam somente a lista exibida; não apagam as seleções.
+- Na Timer 4, nas abas **Instalados** e **Sistema**, use **Marcar todos** ou **Desmarcar todos** para alterar apenas aquela categoria, inclusive apps ocultos pela busca. Na aba **Todos** não há seleção em massa. Marcar todos os apps do sistema pede confirmação, pois pode incluir componentes essenciais.
 
 ## Limites e cuidados
 

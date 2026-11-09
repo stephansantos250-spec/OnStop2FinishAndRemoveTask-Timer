@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.style.TextOverflow
 import io.github.takusan23.onstop2finishandremovetask.R
 
 /** Static gradients and translucent surfaces: no live blur or continuous animation. */
@@ -30,15 +31,17 @@ fun GlassBackdrop(content: @Composable BoxScope.() -> Unit) {
     val colors = MaterialTheme.colorScheme
     CompositionLocalProvider(LocalContentColor provides colors.onSurface) {
         Box(Modifier.fillMaxSize().background(colors.background).drawWithCache {
-            val blueCenter = Offset(size.width * .9f, size.height * .12f)
-            val tealCenter = Offset(0f, size.height * .6f)
-            val blueRadius = size.width * .9f
-            val tealRadius = size.width * .85f
-            val blue = Brush.radialGradient(listOf(colors.primary.copy(alpha = .13f), Color.Transparent), blueCenter, blueRadius)
-            val teal = Brush.radialGradient(listOf(colors.secondary.copy(alpha = .10f), Color.Transparent), tealCenter, tealRadius)
+            val topLight = Offset(size.width * .90f, size.height * .06f)
+            val sideLight = Offset(size.width * -.10f, size.height * .46f)
+            val bottomLight = Offset(size.width * .92f, size.height * .93f)
+            val radius = size.width * 1.05f
+            val blue = Brush.radialGradient(listOf(colors.primary.copy(alpha = .20f), Color.Transparent), topLight, radius)
+            val aqua = Brush.radialGradient(listOf(colors.secondary.copy(alpha = .16f), Color.Transparent), sideLight, radius)
+            val violet = Brush.radialGradient(listOf(colors.tertiary.copy(alpha = .12f), Color.Transparent), bottomLight, radius)
             onDrawBehind {
-                drawCircle(blue, blueRadius, blueCenter)
-                drawCircle(teal, tealRadius, tealCenter)
+                drawCircle(blue, radius, topLight)
+                drawCircle(aqua, radius, sideLight)
+                drawCircle(violet, radius, bottomLight)
             }
         }, content = content)
     }
@@ -52,17 +55,19 @@ fun GlassPanel(
 ) {
     val colors = MaterialTheme.colorScheme
     val tint by animateColorAsState(
-        if (highlighted) colors.primaryContainer.copy(alpha = .90f) else colors.surface.copy(alpha = .86f),
+        if (highlighted) colors.primaryContainer.copy(alpha = .88f) else colors.surface.copy(alpha = .78f),
         tween(180), label = "glassTint"
     )
     val shape = RoundedCornerShape(24.dp)
     Surface(
         modifier = modifier.fillMaxWidth(), shape = shape, color = tint, contentColor = colors.onSurface,
         border = BorderStroke(1.dp, Brush.linearGradient(listOf(
-            colors.outlineVariant.copy(alpha = .9f), colors.surface.copy(alpha = .2f), colors.outlineVariant.copy(alpha = .65f)
+            colors.surfaceBright.copy(alpha = .95f), colors.outlineVariant.copy(alpha = .55f), colors.primary.copy(alpha = .20f)
         )))
     ) {
-        Column(Modifier.clip(shape).background(Brush.linearGradient(listOf(Color.White.copy(alpha = .045f), Color.Transparent)))
+        Column(Modifier.clip(shape).background(Brush.verticalGradient(listOf(
+            colors.surfaceBright.copy(alpha = .14f), Color.Transparent, colors.primary.copy(alpha = .025f)
+        )))
             .padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp), content = content)
     }
 }
@@ -81,18 +86,30 @@ fun TimerMark(modifier: Modifier = Modifier) {
 
 @Composable
 fun GlassTopBar(title: String, subtitle: String? = null, onBack: (() -> Unit)? = null, actions: @Composable RowScope.() -> Unit = {}) {
-    Row(
-        Modifier.fillMaxWidth().windowInsetsPadding(WindowInsets.statusBars).padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    Surface(
+        modifier = Modifier.fillMaxWidth().windowInsetsPadding(WindowInsets.statusBars)
+            .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 4.dp),
+        shape = RoundedCornerShape(24.dp),
+        color = MaterialTheme.colorScheme.surface.copy(alpha = .72f),
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = .55f))
     ) {
-        if (onBack != null) IconButton(onClick = onBack) {
-            Icon(painterResource(R.drawable.back_24px), contentDescription = stringResource(R.string.glass_back))
-        } else TimerMark()
-        Column(Modifier.weight(1f)) {
-            Text(title, style = MaterialTheme.typography.headlineSmall)
-            if (subtitle != null) Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Row(
+            Modifier.fillMaxWidth().background(Brush.verticalGradient(listOf(
+                MaterialTheme.colorScheme.surfaceBright.copy(alpha = .15f), Color.Transparent
+            ))).padding(horizontal = 12.dp, vertical = 4.dp),
+            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            if (onBack != null) IconButton(onClick = onBack) {
+                Icon(painterResource(R.drawable.back_24px), contentDescription = stringResource(R.string.glass_back))
+            } else TimerMark()
+            Column(Modifier.weight(1f)) {
+                Text(title, style = MaterialTheme.typography.titleLarge, maxLines = 1)
+                if (subtitle != null) Text(subtitle, style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis)
+            }
+            actions()
         }
-        actions()
     }
 }

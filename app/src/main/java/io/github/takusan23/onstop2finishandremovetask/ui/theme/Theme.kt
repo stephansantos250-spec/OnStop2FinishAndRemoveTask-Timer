@@ -2,6 +2,8 @@ package io.github.takusan23.onstop2finishandremovetask.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.unit.dp
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -12,6 +14,7 @@ private val Light = lightColorScheme(
     primaryContainer = Color(0xFFE0ECFF), onPrimaryContainer = Color(0xFF10366C),
     secondary = Color(0xFF006C64), onSecondary = Color.White,
     secondaryContainer = Color(0xFFD1F3EA), onSecondaryContainer = Color(0xFF064D45),
+    tertiary = Color(0xFF6357A2), tertiaryContainer = Color(0xFFEAE1FF), onTertiaryContainer = Color(0xFF25154F),
     background = Color(0xFFF5F8FD), surface = Color.White,
     onBackground = Color(0xFF172334), onSurface = Color(0xFF172334),
     onSurfaceVariant = Color(0xFF4B6076), surfaceVariant = Color(0xFFEAF0F8),
@@ -24,6 +27,7 @@ private val Dark = darkColorScheme(
     primaryContainer = Color(0xFF203B60), onPrimaryContainer = Color(0xFFDCEAFF),
     secondary = Color(0xFF8BDBC9), onSecondary = Color(0xFF073C34),
     secondaryContainer = Color(0xFF163F39), onSecondaryContainer = Color(0xFFB3EFDF),
+    tertiary = Color(0xFFCEC1FF), tertiaryContainer = Color(0xFF443879), onTertiaryContainer = Color(0xFFEAE1FF),
     background = Color(0xFF0B1422), surface = Color(0xFF172334),
     onBackground = Color(0xFFE6EDF8), onSurface = Color(0xFFE6EDF8),
     onSurfaceVariant = Color(0xFFAFBED0), surfaceVariant = Color(0xFF26364D),
@@ -42,5 +46,10 @@ fun OnStop2FinishAndRemoveTaskTheme(
     val colors = if (dynamicColor && Build.VERSION.SDK_INT >= 31) {
         if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
     } else if (darkTheme) Dark else Light
-    MaterialTheme(colorScheme = colors, typography = Typography, content = content)
+    val shapes = Shapes(
+        extraSmall = RoundedCornerShape(8.dp), small = RoundedCornerShape(12.dp),
+        medium = RoundedCornerShape(16.dp), large = RoundedCornerShape(24.dp),
+        extraLarge = RoundedCornerShape(28.dp)
+    )
+    MaterialTheme(colorScheme = colors, typography = Typography, shapes = shapes, content = content)
 }

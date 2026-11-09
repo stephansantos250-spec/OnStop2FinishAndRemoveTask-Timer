@@ -24,7 +24,7 @@
     <string name="service_onstop_2_finish_and_remove_task_running_notification_action_stop">Parar serviço</string>
     <string name="service_onstop_2_finish_and_remove_task_task_removed_toast_message_format">Tarefa de [%s] removida</string>
     <string name="glass_back">Voltar</string>
-    <string name="glass_app_subtitle">Segundo plano, sob controle</string>
+    <string name="glass_app_subtitle">Em segundo plano</string>
     <string name="glass_hero_title">No seu ritmo.</string>
     <string name="glass_hero_subtitle">Escolha os apps. Defina o tempo. Deixe o resto ir.</string>
     <string name="glass_selected">Selecionados</string>
@@ -51,4 +51,12 @@
     <string name="screen_license_title">Licenças</string>
     <string name="screen_app_list_permission_card_title">Permita notificações para acessar o botão de parar o serviço. É opcional.</string>
     <string name="screen_app_list_permission_card_button">Permitir notificações</string>
+    <string name="bulk_installed_scope">Afeta todos os apps instalados, inclusive os ocultos pela busca. Apps do sistema não são alterados.</string>
+    <string name="bulk_system_scope">Afeta todos os apps do sistema, inclusive os ocultos pela busca. Apps instalados não são alterados.</string>
+    <string name="bulk_select">Marcar todos</string>
+    <string name="bulk_clear">Desmarcar todos</string>
+    <string name="bulk_system_confirm_title">Marcar todos os apps do sistema?</string>
+    <string name="bulk_system_confirm_body">Componentes essenciais do sistema também serão marcados. Fechar suas tarefas pode afetar o funcionamento do celular.</string>
+    <string name="bulk_confirm">Marcar apps do sistema</string>
+    <string name="bulk_cancel">Cancelar</string>
 </resources>

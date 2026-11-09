@@ -36,4 +36,12 @@
     <string name="screen_app_list_type_system">システムアプリ</string>
     <string name="screen_app_list_type_installed">ユーザーアプリ</string>
     <string name="screen_app_list_system_warning">重要なシステムアプリの選択は避けてください。終了すると端末の動作に影響する場合があります。</string>
+    <string name="bulk_installed_scope">検索で非表示のものを含む、すべてのインストール済みアプリに適用します。システムアプリは変更しません。</string>
+    <string name="bulk_system_scope">検索で非表示のものを含む、すべてのシステムアプリに適用します。インストール済みアプリは変更しません。</string>
+    <string name="bulk_select">すべて選択</string>
+    <string name="bulk_clear">すべて解除</string>
+    <string name="bulk_system_confirm_title">すべてのシステムアプリを選択しますか？</string>
+    <string name="bulk_system_confirm_body">重要なシステムコンポーネントも選択されます。タスクを閉じると端末の動作に影響する可能性があります。</string>
+    <string name="bulk_confirm">システムアプリを選択</string>
+    <string name="bulk_cancel">キャンセル</string>
 </resources>

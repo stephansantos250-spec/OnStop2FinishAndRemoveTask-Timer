@@ -142,4 +142,26 @@ class GlassUiTest {
         } }
         shot("system-dark")
     }
+    @Test fun bulkActionsAreScopedToSelectedCategory() {
+        var option by mutableStateOf(AppListViewModel.SearchOption())
+        var lastAction: Pair<Boolean, AppTypeFilter>? = null
+        rule.setContent { OnStop2FinishAndRemoveTaskTheme(darkTheme = false) {
+            GlassAppListContent(fixtures, option, 2, 3,
+                onOption = { option = it }, onCategoryCheck = { checked, category -> lastAction = checked to category },
+                loadIcons = false)
+        } }
+        rule.onNodeWithText("Marcar todos").assertDoesNotExist()
+        rule.onNodeWithText("Instalados").performClick()
+        rule.onNodeWithText("Marcar todos").performScrollTo().performClick()
+        rule.runOnIdle { assertEquals(true to AppTypeFilter.INSTALLED, lastAction) }
+        rule.onNodeWithText("Desmarcar todos").performScrollTo().performClick()
+        rule.runOnIdle { assertEquals(false to AppTypeFilter.INSTALLED, lastAction) }
+        rule.onNodeWithText("Sistema").performScrollTo().performClick()
+        rule.onNodeWithText("Marcar todos").performScrollTo().performClick()
+        rule.runOnIdle { assertEquals(false to AppTypeFilter.INSTALLED, lastAction) }
+        rule.onNodeWithText("Marcar apps do sistema").performClick()
+        rule.runOnIdle { assertEquals(true to AppTypeFilter.SYSTEM, lastAction) }
+        rule.onNodeWithText("Desmarcar todos").performScrollTo().performClick()
+        rule.runOnIdle { assertEquals(false to AppTypeFilter.SYSTEM, lastAction) }
+    }
 }

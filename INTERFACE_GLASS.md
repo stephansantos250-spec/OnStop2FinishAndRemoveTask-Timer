@@ -3,7 +3,8 @@
 ## Sistema visual
 
 - Base: Material 3 em Jetpack Compose; sem biblioteca visual externa no APK.
-- Superfícies com transparência, bordas sutis e gradiente especular leve.
+- Timer 4: superfícies translúcidas com brilho e bordas em gradiente, barra superior em vidro e fundo com luzes suaves azuis, verdes e violetas.
+- Formas arredondadas de Material 3 e suporte aos temas claro e escuro.
 - Paleta clara: canvas #F5F8FD, texto #172334, secundário #4B6076, destaque #185FC6.
 - Paleta escura: canvas #0B1422, superfície #172334, texto #E6EDF8, secundário #AFBED0, destaque #A8CAFF.
 - Verde/azulado acompanha controles de categoria; avisos usam texto e cor de erro, não só cor.
@@ -20,7 +21,7 @@ O vidro é uma composição de superfícies translúcidas e gradientes estático
 
 Metadados de pacotes são consultados fora da thread principal e compartilhados por StateFlow. Nome e flags de sistema não são relidos a cada troca de categoria. Ícones são dimensionados e carregados em IO. As gravações de seleção são atômicas; um teste executa 20 inclusões concorrentes e 10 remoções concorrentes, sem perder outras seleções.
 
-## Revisão visual
+## Revisão visual da versão anterior (Timer 3)
 
 Foram renderizados e inspecionados individualmente 12 estados, com dados fictícios: lista clara/escura, categoria sistema escura, lista com seleção alterada, configurações clara/escura, estado vazio, busca em painel, conexão Shizuku, permissão escura, licenças e largura de 320 dp com fonte em 125%.
 

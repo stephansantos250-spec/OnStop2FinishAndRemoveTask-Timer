@@ -68,6 +68,16 @@ class AppListViewModel(private val application: Application) : AndroidViewModel(
         }
     }
 
+    /** Bulk actions always target a single category, independent of search filters. */
+    fun registerCategory(isRegistered: Boolean, category: AppTypeFilter) {
+        if (category == AppTypeFilter.ALL || loadingFlow.value) return
+        val packages = installedApps.value.filter { category.matches(it.isSystemApp) }
+            .map { it.packageName }.toSet()
+        viewModelScope.launch {
+            RegisterAppListTool.setApplicationsRegistered(context, packages, isRegistered)
+        }
+    }
+
     /**
      * 検索を変更する
      */
