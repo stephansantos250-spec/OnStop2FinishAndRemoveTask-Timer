@@ -96,8 +96,9 @@ Leia `TEMPORIZADOR.md`, `VALIDACAO_ANDROID.txt`, `APP_FILTROS.md` e `INTERFACE_G
 
 ## Créditos e licença
 
-- Autor do projeto original: [takusan23](https://github.com/takusan23).
-- Projeto original: [OnStop2FinishAndRemoveTask](https://github.com/takusan23/OnStop2FinishAndRemoveTask).
+- Desenvolvedor desta versão: [stephansantos250-spec](https://github.com/stephansantos250-spec).
+- Aplicativo: [OnStop2FinishAndRemoveTask Timer](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer).
+- Base: [OnStop2FinishAndRemoveTask](https://github.com/takusan23/OnStop2FinishAndRemoveTask), de [takusan23](https://github.com/takusan23).
 - Base das modificações: commit `ea535cd546a96722cdfda906508b667de7f81ecb`.
 - Licença: **Apache-2.0** — veja [LICENSE](LICENSE) e [NOTICE](NOTICE).
 - O README original foi preservado em [docs/README-upstream.md](docs/README-upstream.md).
