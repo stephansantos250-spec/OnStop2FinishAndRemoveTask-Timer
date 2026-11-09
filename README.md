@@ -1,6 +1,6 @@
 # OnStop2FinishAndRemoveTask Timer
 
-Uma versão modificada e **não oficial** do [OnStop2FinishAndRemoveTask](https://github.com/takusan23/OnStop2FinishAndRemoveTask), de **takusan23**. Escolha os aplicativos que deseja monitorar e defina um tempo para remover suas tarefas após eles irem para segundo plano.
+Escolha os aplicativos que deseja monitorar e defina um tempo para remover suas tarefas após eles irem para segundo plano.
 
 > **Timer 4 Glass alternativa:** temporizador de **20 a 60 segundos**, seleção em massa por categoria e interface Material 3 inspirada em Liquid Glass. Esta versão é baseada na Timer 3 e não contém os recursos posteriores do OnTimer.
 
