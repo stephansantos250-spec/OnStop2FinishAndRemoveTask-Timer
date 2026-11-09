@@ -6,7 +6,7 @@ Versão modificada e **não oficial** do [OnStop2FinishAndRemoveTask](https://gi
 
 | Versão | Novidades | Downloads |
 | --- | --- | --- |
-| **Timer 4 Glass — 20 a 60 segundos** — `2.0.6-timer.4-glass.2` | Ajuste de segundo em segundo e atalhos de tempo | [Pré-release 20 a 60 segundos](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer.4-glass.2) |
+| **Timer 4 Glass — 20 a 60 segundos** — `2.0.6-timer.4-glass.2` | Ajuste de segundo em segundo e atalhos de tempo | [Release 20 a 60 segundos](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer.4-glass.2) |
 | **Timer 4 Glass (alternativo)** — `2.0.6-timer.4-glass` | Seleção em massa por categoria e visual Material 3 aprimorado; APK com assinatura diferente | [Pré-release Timer 4 Glass](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer.4-glass-alternativo) |
 | **OnTimer** — `2.0.6-timer.8` | Versão mais recente, com temas e temporizador de 30 segundos a 5 minutos | [Release OnTimer](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer.8) |
 | **Timer 3 Glass** — `2.0.6-timer.3` | Interface Material 3 com vidro, temas claro/escuro, animações e otimizações | [Release Timer 3](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer.3) |
