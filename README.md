@@ -1,6 +1,44 @@
 # OnStop2FinishAndRemoveTask Timer
 
-Versão modificada e **não oficial** do [OnStop2FinishAndRemoveTask](https://github.com/takusan23/OnStop2FinishAndRemoveTask), de **takusan23**, com temporizador para remover tarefas de apps após **20 a 60 segundos em segundo plano** nesta versão alternativa.
+Uma versão modificada e **não oficial** do [OnStop2FinishAndRemoveTask](https://github.com/takusan23/OnStop2FinishAndRemoveTask), de **takusan23**. Escolha os aplicativos que deseja monitorar e defina um tempo para remover suas tarefas após eles irem para segundo plano.
+
+> **Timer 4 Glass alternativa:** temporizador de **20 a 60 segundos**, seleção em massa por categoria e interface Material 3 inspirada em Liquid Glass. Esta versão é baseada na Timer 3 e não contém os recursos posteriores do OnTimer.
+
+[**Baixar o APK**](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/download/v2.0.6-timer.4-glass.2/OnStopTimer-20-a-60-segundos.apk) · [Ver release e código-fonte](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer.4-glass.2) · [Todas as versões](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases)
+
+**Requisitos:** Android 12 ou superior e [Shizuku](https://shizuku.rikka.app/) instalado, iniciado e autorizado. A compilação e 33 testes automatizados passaram; **ainda não houve teste em celular ou emulador com Shizuku**.
+
+## Conheça o aplicativo
+
+- **Seu tempo:** escolha de 20 a 60 segundos, com ajuste de 1 em 1 segundo e atalhos para 20, 30, 40, 50 e 60 segundos.
+- **Sua lista:** escolha apps individualmente e filtre entre **Todos**, **Instalados** e **Sistema**. A busca aceita nome do app, nome do pacote e filtro de selecionados.
+- **Seleção por categoria:** marque ou desmarque todos os apps instalados ou do sistema separadamente, sem alterar a outra categoria. A ação também inclui apps ocultos pela busca; a aba **Todos** não tem seleção em massa.
+- **Visual Glass:** cartões translúcidos, gradientes estáticos, tema claro e escuro, usando Material 3 e Jetpack Compose.
+- **Controle:** reabrir um app cancela sua contagem; parar o serviço interrompe o monitoramento e as contagens.
+
+## Imagens do aplicativo
+
+Prévias da **Timer 4 Glass de 20 a 60 segundos**, renderizadas em testes com aplicativos fictícios. Não são capturas de um dispositivo real.
+
+| Tela inicial · tema claro | Apps do sistema · tema escuro |
+| :---: | :---: |
+| ![Lista de aplicativos no tema claro](docs/screenshots/timer4/main-light.png) | ![Filtro de apps do sistema no tema escuro](docs/screenshots/timer4/system-dark.png) |
+| **Configurações · tema claro** | **Configurações · tema escuro** |
+| ![Ajuste do temporizador no tema claro](docs/screenshots/timer4/settings-light.png) | ![Ajuste do temporizador no tema escuro](docs/screenshots/timer4/settings-dark.png) |
+
+## Primeiros passos
+
+1. Instale e inicie o [Shizuku](https://shizuku.rikka.app/).
+2. Baixe e instale o [APK da Timer 4 Glass](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/download/v2.0.6-timer.4-glass.2/OnStopTimer-20-a-60-segundos.apk). Permita a instalação de fontes desconhecidas se o Android solicitar.
+3. Abra o Timer e conceda a permissão solicitada pelo Shizuku. O serviço inicia após a autorização.
+4. Marque os apps desejados. Em **Instalados** ou **Sistema**, os botões de seleção em massa atuam somente na categoria escolhida.
+5. Abra **Configurações** e ajuste o temporizador. Ao deixar um app selecionado em segundo plano, sua contagem começa.
+
+> **Atenção:** não selecione componentes essenciais do sistema, como a interface do sistema ou a tela inicial. A remoção de tarefas pode afetar a navegação. Evite deixar os serviços de versões diferentes do app ativos ao mesmo tempo.
+
+## Atualização e compatibilidade
+
+O APK de 20–60 segundos pode atualizar a pré-release Timer 4 Glass alternativa anterior, pois usa a mesma chave. Ele **não atualiza diretamente o OnTimer nem outras releases assinadas com outra chave**. Desinstalar uma versão existente pode apagar configurações e seleções; faça backup antes. Em uma atualização compatível, tempos acima de 1 minuto passam a 60 segundos e as seleções são preservadas.
 
 ## Downloads e versões
 
@@ -13,7 +51,7 @@ Versão modificada e **não oficial** do [OnStop2FinishAndRemoveTask](https://gi
 | **Timer 2** — `2.0.6-timer.2` | Timer de 1–5 min; filtros **Todos / Instalados / Sistema**; identificação do tipo de app | [Release Timer 2](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer.2) |
 | **Timer 1** — `2.0.6-timer` | Timer de 1–5 min; cancelamento ao reabrir; configuração salva | [Release Timer 1](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer) |
 
-As releases anteriores incluem o **APK assinado**, o **ZIP do código-fonte correspondente** e as **somas SHA-256**. O ramo `main` contém o código da versão **Timer 4 Glass alternativa** (`2.0.6-timer.4-glass.2`), baseada na Timer 3, e não inclui os recursos posteriores do OnTimer. Para o código do OnTimer, use o ZIP anexado à sua release; os arquivos automáticos de código dessa tag não correspondem ao OnTimer. As tags preservam os estados anteriores do ramo. O APK da compilação local Timer 4 usa uma assinatura diferente e não atualiza diretamente os APKs anteriores; leia [LEIA-ESTA-VERSAO.md](LEIA-ESTA-VERSAO.md).
+As releases disponibilizam APKs e detalhes de cada versão. A release Timer 4 Glass de 20 a 60 segundos também inclui um ZIP com o código-fonte correspondente e as somas SHA-256. O ramo `main` contém o código da versão **Timer 4 Glass alternativa** (`2.0.6-timer.4-glass.2`), baseada na Timer 3, e não inclui os recursos posteriores do OnTimer. Para o código do OnTimer, use o ZIP anexado à sua release; os arquivos automáticos de código dessa tag não correspondem ao OnTimer. As tags preservam os estados anteriores do ramo. O APK Timer 4 Glass atual usa a mesma chave da pré-release Timer 4 Glass alternativa anterior, mas uma chave diferente do OnTimer e de outras releases; leia [LEIA-ESTA-VERSAO.md](LEIA-ESTA-VERSAO.md).
 
 ## Interface Glass — Timer 4
 
@@ -25,19 +63,7 @@ Para manter o visual leve, não há blur/refração em tempo real nem animaçõe
 
 **Validação:** a compilação de release e 33 testes automatizados passaram. Telas com apps fictícios foram renderizadas em Robolectric; ainda é necessário testar em celular com Shizuku.
 
-Prévias da versão Timer 3: [tela clara](docs/previews/main-light.png), [tela escura](docs/previews/main-dark.png), [configurações](docs/previews/settings-light.png). Todas as prévias estão em [docs/previews](docs/previews).
-
-## Instalação
-
-1. Baixe o APK da release desejada. Requer **Android 12 (API 31) ou mais recente**.
-2. Instale **OnStop2FinishAndRemoveTask Timer**. É uma instalação separada do app oficial.
-3. Inicie o **Shizuku**, abra a versão Timer e conceda a permissão solicitada.
-4. Selecione os apps e escolha o tempo em **Configurações → Temporizador de fechamento**.
-5. Mantenha o serviço do **app oficial original parado**, para evitar fechamentos imediatos e conflito com a contagem.
-
-Na atualização para esta versão, tempos antigos acima de 1 minuto passam a 60 segundos; seleções de apps são preservadas quando a assinatura permite atualizar.
-
-A Timer 3 pode atualizar as versões Timer 1 e Timer 2 **sem desinstalar**, pois os APKs publicados usam o mesmo identificador e certificado. As configurações devem ser preservadas pelo Android. APKs recompilados com outra chave não podem atualizar esses APKs diretamente.
+As prévias das versões anteriores continuam em [docs/previews](docs/previews).
 
 ## Funcionamento
 
