@@ -38,20 +38,20 @@ Prévias da **Timer 4 Glass de 20 a 60 segundos**, renderizadas em testes com ap
 
 ## Atualização e compatibilidade
 
-O APK de 20–60 segundos pode atualizar a pré-release Timer 4 Glass alternativa anterior, pois usa a mesma chave. Ele **não atualiza diretamente o OnTimer nem outras releases assinadas com outra chave**. Desinstalar uma versão existente pode apagar configurações e seleções; faça backup antes. Em uma atualização compatível, tempos acima de 1 minuto passam a 60 segundos e as seleções são preservadas.
+O APK de 20–60 segundos pode atualizar a release Timer 4 Glass alternativa anterior, pois usa a mesma chave. Ele **não atualiza diretamente o OnTimer nem outras releases assinadas com outra chave**. Desinstalar uma versão existente pode apagar configurações e seleções; faça backup antes. Em uma atualização compatível, tempos acima de 1 minuto passam a 60 segundos e as seleções são preservadas.
 
 ## Downloads e versões
 
 | Versão | Novidades | Downloads |
 | --- | --- | --- |
 | **Timer 4 Glass — 20 a 60 segundos** — `2.0.6-timer.4-glass.2` | Ajuste de segundo em segundo e atalhos de tempo | [Release 20 a 60 segundos](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer.4-glass.2) |
-| **Timer 4 Glass (alternativo)** — `2.0.6-timer.4-glass` | Seleção em massa por categoria e visual Material 3 aprimorado; APK com assinatura diferente | [Pré-release Timer 4 Glass](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer.4-glass-alternativo) |
+| **Timer 4 Glass (alternativo)** — `2.0.6-timer.4-glass` | Seleção em massa por categoria e visual Material 3 aprimorado; APK com assinatura diferente | [Release Timer 4 Glass](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer.4-glass-alternativo) |
 | **OnTimer** — `2.0.6-timer.8` | Versão mais recente, com temas e temporizador de 30 segundos a 5 minutos | [Release OnTimer](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer.8) |
 | **Timer 3 Glass** — `2.0.6-timer.3` | Interface Material 3 com vidro, temas claro/escuro, animações e otimizações | [Release Timer 3](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer.3) |
 | **Timer 2** — `2.0.6-timer.2` | Timer de 1–5 min; filtros **Todos / Instalados / Sistema**; identificação do tipo de app | [Release Timer 2](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer.2) |
 | **Timer 1** — `2.0.6-timer` | Timer de 1–5 min; cancelamento ao reabrir; configuração salva | [Release Timer 1](https://github.com/stephansantos250-spec/OnStop2FinishAndRemoveTask-Timer/releases/tag/v2.0.6-timer) |
 
-As releases disponibilizam APKs e detalhes de cada versão. A release Timer 4 Glass de 20 a 60 segundos também inclui um ZIP com o código-fonte correspondente e as somas SHA-256. O ramo `main` contém o código da versão **Timer 4 Glass alternativa** (`2.0.6-timer.4-glass.2`), baseada na Timer 3, e não inclui os recursos posteriores do OnTimer. Para o código do OnTimer, use o ZIP anexado à sua release; os arquivos automáticos de código dessa tag não correspondem ao OnTimer. As tags preservam os estados anteriores do ramo. O APK Timer 4 Glass atual usa a mesma chave da pré-release Timer 4 Glass alternativa anterior, mas uma chave diferente do OnTimer e de outras releases; leia [LEIA-ESTA-VERSAO.md](LEIA-ESTA-VERSAO.md).
+As releases disponibilizam APKs e detalhes de cada versão. A release Timer 4 Glass de 20 a 60 segundos também inclui um ZIP com o código-fonte correspondente e as somas SHA-256. O ramo `main` contém o código da versão **Timer 4 Glass alternativa** (`2.0.6-timer.4-glass.2`), baseada na Timer 3, e não inclui os recursos posteriores do OnTimer. Para o código do OnTimer, use o ZIP anexado à sua release; os arquivos automáticos de código dessa tag não correspondem ao OnTimer. As tags preservam os estados anteriores do ramo. O APK Timer 4 Glass atual usa a mesma chave da release Timer 4 Glass alternativa anterior, mas uma chave diferente do OnTimer e de outras releases; leia [LEIA-ESTA-VERSAO.md](LEIA-ESTA-VERSAO.md).
 
 ## Interface Glass — Timer 4
 

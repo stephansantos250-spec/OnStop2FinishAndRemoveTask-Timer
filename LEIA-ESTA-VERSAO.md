@@ -6,6 +6,6 @@ Esta cópia inclui o visual Material 3 inspirado em Liquid Glass e ações separ
 
 O efeito usa transparência e gradientes estáticos; não há desfoque ou refração ao vivo.
 
-O APK desta compilação usa a mesma chave da pré-release Timer 4 Glass alternativa, podendo atualizá-la. Essa chave é diferente das demais releases anteriores, incluindo OnTimer; por isso, o Android não instalará este APK como atualização sobre elas. Desinstalar a versão existente pode apagar configurações e seleções; preserve-as antes. O APK não foi testado em aparelho com Shizuku.
+O APK desta compilação usa a mesma chave da release Timer 4 Glass alternativa, podendo atualizá-la. Essa chave é diferente das demais releases anteriores, incluindo OnTimer; por isso, o Android não instalará este APK como atualização sobre elas. Desinstalar a versão existente pode apagar configurações e seleções; preserve-as antes. O APK não foi testado em aparelho com Shizuku.
 
 Requer Android 12 ou superior e Shizuku. Não mantenha serviços de versões diferentes do app ativos ao mesmo tempo. O código compilado neste arquivo é para referência; a chave privada não está incluída.
